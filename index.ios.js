@@ -4,49 +4,91 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
+import React, {
   AppRegistry,
   StyleSheet,
+  Component,
   Text,
-  View
+  View,
+  Navigator,
+  NavigatorIOS
 } from 'react-native';
 
-class DotaClub extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit 11index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+var TimerMixin = require('react-timer-mixin');
 
-const styles = StyleSheet.create({
+import SplashScreen from './SplashScreen';
+import MainScreen from './MainScreen';
+
+var _navigator;
+
+var DotaClub = React.createClass({
+  mixins: [TimerMixin],
+
+  getInitialState: function() {
+    return {
+      splashed: false,
+    };
+  },
+
+  componentDidMount: function() {
+    this.setTimeout(
+        () => {
+          this.setState({splashed: true});
+        },
+        2000,
+    );
+  },
+
+  RouteMapper: function(route, navigationOperations, onComponentRef) {
+    _navigator = navigationOperations;
+    // return (
+    //   <View style={styles.container}>
+    //     <MainScreen navigator={navigationOperations}/>
+    //   </View>
+    // );
+    if (route.name === 'home') {
+      return (
+          <View style={styles.container}>
+            <MainScreen navigator={navigationOperations}/>
+          </View>
+      );
+    }
+  },
+
+  render: function() {
+    if (this.state.splashed) {
+      var initialRoute = {name: 'home'};
+      return (
+        // <NavigatorIOS
+        //   style={styles.container}
+        //   initialRoute={{
+        //     title: '首页',
+        //     component: MainScreen,
+        //   }}
+        // />
+          <Navigator
+              style={styles.container}
+              initialRoute={initialRoute}
+              configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+              renderScene={this.RouteMapper}
+          />
+      );
+      // return (
+      //   <View style={styles.container}>
+      //     <MainScreen />
+      //   </View>
+      // );
+    } else {
+      return (
+          <SplashScreen />
+      );
+    }
+  }
+});
+
+var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 
