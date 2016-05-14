@@ -1,26 +1,28 @@
 'use strict';
 
-var React = require('react-native');
-
-var {
-  Image,
-  PixelRatio,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  View,
-} = React;
+import React, { Component } from 'react';
+import {
+    Image,
+    PixelRatio,
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    TouchableNativeFeedback,
+    View
+} from 'react-native';
 
 var TITLE_REF = 'title';
 
-var StoryItem = React.createClass({
-  updateReadSate: function() {
+class StoryItem extends Component {
+    constructor(props) {
+        super(props);
+    }
+  updateReadSate() {
     this.refs[TITLE_REF].setNativeProps({style: {color: '#777777'}});
     this.props.onSelect();
-  },
-  render: function() {
+  }
+  render() {
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -54,7 +56,7 @@ var StoryItem = React.createClass({
       </View>
     );
   }
-});
+};
 
 var styles = StyleSheet.create({
   storyTitle: {

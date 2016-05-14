@@ -1,34 +1,33 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AsyncStorage,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} = React;
+import React, { Component } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
 
-var Drawer = require('react-native-drawer');
-var StoriesList = require('./StoriesList');
-var ThemesList = require('./ThemesList');
+import Drawer from 'react-native-drawer';
+import StoriesList from './StoriesList';
+import ThemesList from './ThemesList';
 
 var DRAWER_REF = 'drawer';
 
-var MainScreen = React.createClass({
-  getInitialState: function() {
-    return ({
+class MainScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       theme: null,
-    });
-  },
-  onSelectTheme: function(theme) {
+    };
+  }
+  onSelectTheme(theme) {
     this.refs[DRAWER_REF].close();
     this.setState({theme: theme});
-  },
-  onRefresh: function() {
+  }
+  onRefresh() {
     this.onSelectTheme(this.state.theme);
-  },
-  render: function() {
+  }
+  render() {
     var drawer = <ThemesList onSelectItem={this.onSelectTheme} />;
     return (
         <Drawer
@@ -40,7 +39,6 @@ var MainScreen = React.createClass({
         </Drawer>
       );
   }
-
-});
+};
 
 module.exports = MainScreen;

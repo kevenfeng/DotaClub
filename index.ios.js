@@ -4,14 +4,14 @@
  * @flow
  */
 
-import React, {
-  AppRegistry,
-  StyleSheet,
-  Component,
-  Text,
-  View,
-  Navigator,
-  NavigatorIOS
+import React, { Component } from 'react';
+import {
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    Navigator,
+    NavigatorIOS
 } from 'react-native';
 
 var TimerMixin = require('react-timer-mixin');
@@ -21,25 +21,25 @@ import MainScreen from './MainScreen';
 
 var _navigator;
 
-var DotaClub = React.createClass({
-  mixins: [TimerMixin],
+class DotaClub extends Component {
 
-  getInitialState: function() {
-    return {
-      splashed: false,
-    };
-  },
+    constructor(props) {
+        super(props);
+        this.state = {
+            splashed: false,
+        };
+    }
 
-  componentDidMount: function() {
-    this.setTimeout(
+  componentDidMount() {
+    setTimeout(
         () => {
           this.setState({splashed: true});
         },
-        2000,
+        2000
     );
-  },
+  }
 
-  RouteMapper: function(route, navigationOperations, onComponentRef) {
+  RouteMapper(route, navigationOperations, onComponentRef) {
     _navigator = navigationOperations;
     // return (
     //   <View style={styles.container}>
@@ -53,9 +53,9 @@ var DotaClub = React.createClass({
           </View>
       );
     }
-  },
+  }
 
-  render: function() {
+  render() {
     if (this.state.splashed) {
       var initialRoute = {name: 'home'};
       return (
@@ -84,7 +84,7 @@ var DotaClub = React.createClass({
       );
     }
   }
-});
+};
 
 var styles = StyleSheet.create({
   container: {

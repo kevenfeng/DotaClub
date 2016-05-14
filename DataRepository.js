@@ -1,10 +1,9 @@
 'use strict';
 
-var React = require('react-native');
-
-var {
-  AsyncStorage,
-} = React;
+import React, { Component } from 'react';
+import {
+    AsyncStorage
+} from 'react-native';
 
 var API_COVER_URL = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
 var API_LATEST_URL = 'http://news-at.zhihu.com/api/4/news/latest';
@@ -84,8 +83,8 @@ DataRepository.prototype.updateCover = function() {
     .done();
 }
 
-DataRepository.prototype.fetchStories = function(date?: Date,
-  callback?: ?(error: ?Error, result: ?Object) => void
+DataRepository.prototype.fetchStories = function(date,
+  callback
 ) {
   var reqUrl;
   var topData = null;
@@ -127,8 +126,8 @@ DataRepository.prototype.fetchStories = function(date?: Date,
   return merged;
 };
 
-DataRepository.prototype.fetchThemeStories = function(themeId: number, lastID?: string,
-  callback?: ?(error: ?Error, result: ?Object) => void
+DataRepository.prototype.fetchThemeStories = function(themeId, lastID,
+  callback
 ) {
   // Home story list
   if (themeId === 0) {
@@ -184,8 +183,8 @@ DataRepository.prototype.fetchThemeStories = function(themeId: number, lastID?: 
   return merged;
 };
 
-DataRepository.prototype.saveStories = function(themeList: object, topData: object,
-  callback?: ?(error: ?Error, result: ?Object) => void
+DataRepository.prototype.saveStories = function(themeList, topData,
+  callback
 ) {
   var homeList = themeList[0];
   var keyValuePairs = [];
@@ -217,7 +216,7 @@ DataRepository.prototype.saveStories = function(themeList: object, topData: obje
 };
 
 DataRepository.prototype.getThemes = function(
-  callback?: ?(error: ?Error, result: ?Object) => void
+  callback
 ) {
   return this._safeStorage(KEY_THEMES)
     .then((result) => {

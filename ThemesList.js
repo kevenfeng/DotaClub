@@ -1,37 +1,39 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AsyncStorage,
-  Platform,
-  ListView,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  TouchableNativeFeedback,
-  TouchableHighlight,
-} = React
+import React, { Component } from 'react';
+import {
+    AsyncStorage,
+    Platform,
+    ListView,
+    Image,
+    StyleSheet,
+    Text,
+    View,
+    TouchableNativeFeedback,
+    TouchableHighlight,
+} from 'react-native';
 
-var DataRepository = require('./DataRepository');
+import DataRepository from './DataRepository';
 
 var repository = new DataRepository();
 
-var ThemesList = React.createClass({
-  getInitialState: function() {
+class ThemesList extends Component {
+  constructor(props) {
+    super(props);
     var dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
-
-    return {
+    this.state = {
       isLoading: false,
       dataSource: dataSource,
     };
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     this.fetchThemes();
-  },
-  fetchThemes: function() {
+  }
+
+  fetchThemes() {
     repository.getThemes()
       .then((themes) => {
         this.setState({
@@ -46,8 +48,8 @@ var ThemesList = React.createClass({
         });
       })
       .done();
-  },
-  renderHeader: function() {
+  }
+  renderHeader() {
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -100,15 +102,15 @@ var ThemesList = React.createClass({
         </TouchableElement>
       </View>
     );
-  },
-  renderRow: function(
-    theme: Object,
-    sectionID: number | string,
-    rowID: number | string,
-    highlightRowFunc: (sectionID: ?number | string, rowID: ?number | string) => void,
+  }
+  renderRow(
+    theme,
+    sectionID,
+    rowID,
+    highlightRowFunc
   ) {
     var TouchableElement = TouchableHighlight;
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android'){
       TouchableElement = TouchableNativeFeedback;
     }
     var icon = theme.subscribed ? require('image!ic_menu_arrow') : require('image!ic_menu_follow');
@@ -126,9 +128,9 @@ var ThemesList = React.createClass({
           </View>
         </TouchableElement>
       </View>
-    );
-  },
-  render: function() {
+    )
+  }
+  render(){
     return (
       <View style={styles.container} {...this.props}>
         <ListView
@@ -144,8 +146,8 @@ var ThemesList = React.createClass({
         />
       </View>
     );
-  },
-});
+  }
+};
 
 var styles = StyleSheet.create({
   container: {
