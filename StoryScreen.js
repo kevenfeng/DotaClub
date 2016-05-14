@@ -1,41 +1,43 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AppRegistry,
-  PixelRatio,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ToolbarAndroid,
-  TouchableHighlight,
-  Animated,
-  Platform,
-  WebView,
-} = React;
+import React, { Component } from 'react';
+import {
+    AppRegistry,
+    PixelRatio,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableHighlight,
+    Animated,
+    Platform,
+    WebView
+} from 'react-native';
 
-var DetailToolbar = require('./DetailToolbar');
-var MyWebView = (Platform.OS === 'ios') ? WebView : require('./WebView');
+import DetailToolbar from './DetailToolbar';
+//var MyWebView = (Platform.OS === 'ios') ? WebView : require('./WebView');
+var MyWebView = WebView;
+
 
 var BASE_URL = 'http://news.at.zhihu.com/api/4/news/';
 var REF_HEADER = 'header';
 var PIXELRATIO = PixelRatio.get();
 var HEADER_SIZE = 200;
+class StoryScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: false,
+            detail: null,
+            scrollY: 0,
+            scrollValue: new Animated.Value(0)
+        };
+    }
 
-var StoryScreen = React.createClass({
-  getInitialState: function() {
-    return({
-      isLoading: false,
-      detail: null,
-      scrollY: 0,
-      scrollValue: new Animated.Value(0)
-    });
-  },
-  componentDidMount: function() {
+  componentDidMount() {
     this.fetchStroyDetail();
-  },
-  fetchStroyDetail: function() {
+  }
+  fetchStroyDetail() {
     var reqUrl = BASE_URL + this.props.story.id;
     this.setState({
       isLoading: true,
@@ -56,13 +58,13 @@ var StoryScreen = React.createClass({
         });
       })
       .done();
-  },
-  onWebViewScroll: function(event) {
+  }
+  onWebViewScroll(event) {
     //console.log('ScrollY: ' + event);
     var scrollY = -event / PIXELRATIO;
     this.state.scrollValue.setValue(scrollY);
-  },
-  render: function() {
+  }
+  render() {
 
     var toolbar = <DetailToolbar navigator={this.props.navigator} style={styles.toolbar}
       story={this.props.story}/>;
@@ -118,7 +120,7 @@ var StoryScreen = React.createClass({
     }
 
   }
-});
+};
 
 var styles = StyleSheet.create({
   toolbar: {

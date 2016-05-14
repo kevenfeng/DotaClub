@@ -14,7 +14,7 @@ import {
     NavigatorIOS
 } from 'react-native';
 
-var TimerMixin = require('react-timer-mixin');
+//var TimerMixin = require('react-timer-mixin');
 
 import SplashScreen from './SplashScreen';
 import MainScreen from './MainScreen';
@@ -58,6 +58,7 @@ class DotaClub extends Component {
   render() {
     if (this.state.splashed) {
       var initialRoute = {name: 'home'};
+
       return (
         // <NavigatorIOS
         //   style={styles.container}

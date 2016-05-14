@@ -165,7 +165,7 @@ class StoriesList extends Component {
         isRefresh && this.props.onRefreshFinish && this.props.onRefreshFinish();
       })
       .catch((error) => {
-        console.error(error);
+        //console.error(error);
         this.setState({
           isLoading: (isRefresh ? false : this.state.isLoading),
           isLoadingTail: (isRefresh ? this.state.isLoadingTail : false),
@@ -179,6 +179,7 @@ class StoriesList extends Component {
     story,
     pageID
   ) {
+
     return (
       <TouchableOpacity style={{flex: 1}} onPress={() => {this.selectStory(story)}}>
         <Image
@@ -195,9 +196,10 @@ class StoriesList extends Component {
     )
   }
   _renderHeader() {
-      console.log(1);
-    if (this.props.theme) {
-      var themeId = this.props.theme ? this.props.theme.id : 0;
+    if (null) {
+        console.log(1);
+
+        var themeId = this.props.theme ? this.props.theme.id : 0;
       var topData = dataCache.topDataForTheme[themeId];
       if (!topData) {
         return null;
@@ -220,6 +222,7 @@ class StoriesList extends Component {
         </View>
       );
     } else {
+        debugger;
       return (
         <View style={{flex: 1, height: 200}}>
           <ViewPager
@@ -324,7 +327,7 @@ class StoriesList extends Component {
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps={true}
         showsVerticalScrollIndicator={false}
-        renderHeader={this._renderHeader}
+        renderHeader={this._renderHeader.bind(this)}
       />;
     return content;
   }

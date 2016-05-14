@@ -1,38 +1,41 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AppRegistry,
-  Platform,
-  PixelRatio,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableNativeFeedback,
-  TouchableHighlight,
-  ToastAndroid,
-} = React;
-
-var SwitchAndroid = require('SwitchAndroid');
-var ToolbarAndroid = require('ToolbarAndroid');
+import React, { Component } from 'react';
+import {
+    AppRegistry,
+    Platform,
+    PixelRatio,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableNativeFeedback,
+    TouchableHighlight,
+    ToastAndroid,
+} from 'react-native';
+//
+//var SwitchAndroid = require('SwitchAndroid');
+//var ToolbarAndroid = require('ToolbarAndroid');
 var statusBarSize = Platform.OS == 'ios' ? 10 : 0;
 
 var API_STROY_EXTRA = 'http://news-at.zhihu.com/api/4/story-extra/';
 
-var DetailToolbar = React.createClass({
-  getInitialState: function() {
-    return({
+
+class DetailToolbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       isLoading: true,
       extra: null,
-    });
-  },
-  componentDidMount: function() {
+    };
+  }
+
+  componentDidMount() {
     if (this.isMounted()) {
       this.fetchStroyExtra();
     }
-  },
-  fetchStroyExtra: function() {
+  }
+  fetchStroyExtra() {
     fetch(API_STROY_EXTRA + this.props.story.id)
       .then((response) => response.json())
       .then((responseData) => {
@@ -48,29 +51,29 @@ var DetailToolbar = React.createClass({
         });
       })
       .done();
-  },
-  _onPressBackButton: function() {
+  }
+  _onPressBackButton() {
     if (this.props.navigator) {
       this.props.navigator.pop();
     }
-  },
-  _onPressShareButton: function() {
+  }
+  _onPressShareButton() {
     // TODO:
-    ToastAndroid.show('分享', ToastAndroid.SHORT);
-  },
-  _onPressCollectButton: function() {
+    //ToastAndroid.show('分享', ToastAndroid.SHORT);
+  }
+  _onPressCollectButton() {
     // TODO:
-    ToastAndroid.show('收藏', ToastAndroid.SHORT);
-  },
-  _onPressCommentButton: function() {
+    //ToastAndroid.show('收藏', ToastAndroid.SHORT);
+  }
+  _onPressCommentButton() {
     // TODO:
-    ToastAndroid.show('评论', ToastAndroid.SHORT);
-  },
-  _onPressPriseButton: function() {
+    //ToastAndroid.show('评论', ToastAndroid.SHORT);
+  }
+  _onPressPriseButton() {
     // TODO:
-    ToastAndroid.show('赞', ToastAndroid.SHORT);
-  },
-  render: function() {
+    //ToastAndroid.show('赞', ToastAndroid.SHORT);
+  }
+  render() {
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -135,9 +138,9 @@ var DetailToolbar = React.createClass({
       //   actions={[]} >
       // </ToolbarAndroid>
     );
-  },
+  }
 
-});
+};
 
 var styles = StyleSheet.create({
   actionsContainer: {
