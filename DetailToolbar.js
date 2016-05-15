@@ -81,7 +81,7 @@ class DetailToolbar extends Component {
     return(
       <View {...this.props}>
         <View style={styles.actionsContainer}>
-          <TouchableElement onPress={this._onPressBackButton}>
+          <TouchableElement onPress={this._onPressBackButton.bind(this)}>
             <View style={styles.actionItem}>
               <Image
                 style={styles.backIcon}

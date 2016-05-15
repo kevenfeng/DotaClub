@@ -37,7 +37,7 @@ class StoryItem extends Component {
     return (
       <View {...this.props}>
         <TouchableElement
-          onPress={this.updateReadSate /*this.props.onSelect*/}
+          onPress={this.updateReadSate.bind(this) /*this.props.onSelect*/}
           onShowUnderlay={this.props.onHighlight}
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.row}>
