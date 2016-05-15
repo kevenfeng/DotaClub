@@ -18,6 +18,7 @@ import {
 
 import SplashScreen from './SplashScreen';
 import MainScreen from './MainScreen';
+import StoryScreen from './StoryScreen';
 
 var _navigator;
 
@@ -52,6 +53,15 @@ class DotaClub extends Component {
             <MainScreen navigator={navigationOperations}/>
           </View>
       );
+    } else if (route.name === 'story') {
+        return (
+            <View style={styles.container}>
+                <StoryScreen
+                    style={{flex: 1}}
+                    navigator={navigationOperations}
+                    story={route.story} />
+            </View>
+        );
     }
   }
 

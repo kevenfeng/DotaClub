@@ -1,23 +1,24 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  AsyncStorage,
-  Platform,
-  Dimensions,
-  ListView,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} = React
+import React, { Component } from 'react';
+import {
+    AsyncStorage,
+    Platform,
+    Dimensions,
+    ListView,
+    Image,
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity
+} from 'react-native';
 
-var StoryItem = require('./StoryItem');
-var ThemesList = require('./ThemesList');
-var DataRepository = require('./DataRepository');
-var ViewPager = require('react-native-viewpager');
-var StoryScreen = require('./StoryScreen');
+import StoryItem from './StoryItem';
+import ThemesList from './ThemesList';
+import DataRepository from './DataRepository';
+import ViewPager from 'react-native-viewpager';
+import StoryScreen from './StoryScreen';
+
 
 var LOADING = {};
 var WEEKDAY = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
@@ -49,9 +50,9 @@ Date.prototype.yyyymmdd = function() {
   return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
 };
 
-var StoriesList = React.createClass({
-
-  getInitialState: function() {
+class StoriesList extends Component {
+  constructor(props) {
+    super(props);
     var dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
@@ -61,23 +62,24 @@ var StoriesList = React.createClass({
       pageHasChanged: (p1, p2) => p1 !== p2,
     });
 
-    return {
+    this.state = {
       isLoading: false,
       isLoadingTail: false,
       dataSource: dataSource,
       headerDataSource: headerDataSource,
     };
-  },
-  componentWillUnmount: function() {
+  }
+
+  componentWillUnmount() {
     repository.saveStories(dataCache.dataForTheme, dataCache.topDataForTheme);
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     this.fetchStories(this.props.theme, true);
-  },
+  }
   componentWillReceiveProps(nextProps) {
     this.fetchStories(nextProps.theme, true);
-  },
-  fetchStories: function(theme, isRefresh) {
+  }
+  fetchStories(theme, isRefresh) {
     var themeId = theme ? theme.id : 0;
     var isInTheme = themeId !== 0
     var lastID = isRefresh ? null : dataCache.lastID[themeId];
@@ -163,7 +165,7 @@ var StoriesList = React.createClass({
         isRefresh && this.props.onRefreshFinish && this.props.onRefreshFinish();
       })
       .catch((error) => {
-        console.error(error);
+        //console.error(error);
         this.setState({
           isLoading: (isRefresh ? false : this.state.isLoading),
           isLoadingTail: (isRefresh ? this.state.isLoadingTail : false),
@@ -172,10 +174,12 @@ var StoriesList = React.createClass({
         isRefresh && this.props.onRefreshFinish && this.props.onRefreshFinish();
       })
       .done();
-  },
-  _renderPage: function(
-    story: Object,
-    pageID: number | string,) {
+  }
+  _renderPage(
+    story,
+    pageID
+  ) {
+    debugger;
     return (
       <TouchableOpacity style={{flex: 1}} onPress={() => {this.selectStory(story)}}>
         <Image
@@ -190,10 +194,12 @@ var StoriesList = React.createClass({
         </Image>
       </TouchableOpacity>
     )
-  },
-  _renderHeader: function() {
-    if (this.props.theme) {
-      var themeId = this.props.theme ? this.props.theme.id : 0;
+  }
+  _renderHeader() {
+    if (null) {
+        console.log(1);
+
+        var themeId = this.props.theme ? this.props.theme.id : 0;
       var topData = dataCache.topDataForTheme[themeId];
       if (!topData) {
         return null;
@@ -216,6 +222,7 @@ var StoriesList = React.createClass({
         </View>
       );
     } else {
+        debugger;
       return (
         <View style={{flex: 1, height: 200}}>
           <ViewPager
@@ -227,8 +234,8 @@ var StoriesList = React.createClass({
         </View>
       );
     }
-  },
-  getSectionTitle: function(str) {
+  }
+  getSectionTitle(str) {
     var date = parseDateFromYYYYMMdd(str);
     if (date.toDateString() == new Date().toDateString()) {
       return '今日热闻';
@@ -236,9 +243,9 @@ var StoriesList = React.createClass({
     var title = str.slice(4, 6)  + '月' + str.slice(6, 8) + '日';
     title += ' ' + WEEKDAY[date.getDay()];
     return title;
-  },
-  renderSectionHeader: function(sectionData: Object,
-    sectionID: number | string) {
+  }
+  renderSectionHeader(sectionData,
+    sectionID) {
     if (this.props.theme) {
       return (
         <View></View>
@@ -250,8 +257,8 @@ var StoriesList = React.createClass({
         </Text>
       );
     }
-  },
-  selectStory: function(story: Object) {
+  }
+  selectStory(story) {
     story.read = true;
     // if (Platform.OS === 'ios') {
     //   this.props.navigator.push({
@@ -266,13 +273,13 @@ var StoriesList = React.createClass({
         story: story,
       });
     // }
-  },
-  renderRow: function(
-    story: Object,
-    sectionID: number | string,
-    rowID: number | string,
-    highlightRowFunc: (sectionID: ?number | string, rowID: ?number | string) => void,
-  ) {
+  }
+  renderRow(
+    story,
+    sectionID,
+    rowID,
+    highlightRowFunc
+  ){
     return (
       <StoryItem
         key={story.id}
@@ -282,15 +289,15 @@ var StoriesList = React.createClass({
         story={story}
       />
     );
-  },
-  onEndReached: function() {
+  }
+  onEndReached(){
     console.log('onEndReached() ' + this.state.isLoadingTail);
     if (this.state.isLoadingTail) {
       return;
     }
     this.fetchStories(this.props.theme, false);
-  },
-  setTheme: function(theme) {
+  }
+  setTheme(theme){
     // ToastAndroid.show('选择' + theme.name, ToastAndroid.SHORT);
     this.drawer.closeDrawer();
     this.setState({
@@ -300,11 +307,11 @@ var StoriesList = React.createClass({
       dataSource: this.state.dataSource,
     });
     this.fetchStories(theme, true);
-  },
-  onRefresh: function() {
+  }
+  onRefresh() {
     this.onSelectTheme(this.props.theme);
-  },
-  render: function() {
+  }
+  render(){
     var content = this.state.dataSource.getRowCount() === 0 ?
       <View style={styles.centerEmpty}>
         <Text>{this.state.isLoading ? '正在加载...' : '加载失败'}</Text>
@@ -320,11 +327,11 @@ var StoriesList = React.createClass({
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps={true}
         showsVerticalScrollIndicator={false}
-        renderHeader={this._renderHeader}
+        renderHeader={this._renderHeader.bind(this)}
       />;
     return content;
   }
-});
+};
 
 var styles = StyleSheet.create({
   centerEmpty: {
