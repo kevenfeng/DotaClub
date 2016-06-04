@@ -31,7 +31,7 @@ class DetailToolbar extends Component {
   }
 
   componentDidMount() {
-    //if (this.isMounted()) {
+    //if (this.isMounted) {
       this.fetchStroyExtra();
     //}
   }

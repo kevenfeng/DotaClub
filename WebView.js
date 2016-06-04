@@ -1,13 +1,13 @@
 'use strict';
 
-var React = require('react-native');
-var {
-  View,
-  requireNativeComponent,
-  PropTypes
-} = React;
+import React, { Component } from 'react';
+import {
+    View,
+    requireNativeComponent,
+    PropTypes
+} from 'react-native';
 
-var ReactNativeViewAttributes = require('ReactNativeViewAttributes');
+import ReactNativeViewAttributes from 'ReactNativeViewAttributes';
 
 class ObservableWebView extends React.Component {
   constructor() {
