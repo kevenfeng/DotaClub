@@ -75,7 +75,7 @@ class DotaClub extends Component {
 
     // Nav使用
     navBar() {
-        //if(!this.state.hideNavBar) {
+        if(!this.state.hideNavBar) {
             return <Navigator.NavigationBar
                 routeMapper={{
                       LeftButton: this.LeftButton,
@@ -84,9 +84,9 @@ class DotaClub extends Component {
                   }}
                 style={styles.navBar}
             />;
-        //} else {
-        //    return <Text style={{height:0,position:'absolute',top:0}} />;
-        //}
+        } else {
+            return <Text style={{height:0,position:'absolute',top:0}} />;
+        }
     }
 
     LeftButton(route, navigator, index, navState) {
