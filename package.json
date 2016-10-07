@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test":"1"
+    "test":"1",
+    "test2":"3"
   },
   "dependencies": {
     "native-base": "^0.5.7",
