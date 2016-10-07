@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "native-base": "^0.5.7",
-    "react": "^0.14.8",
-    "react-native": "^0.25.1",
+    "react": "^15.3.2",
+    "react-native": "^0.34.1",
     "react-native-drawer": "^2.2.2",
     "react-native-vector-icons": "^2.1.0",
     "react-native-viewpager": "^0.2.1",

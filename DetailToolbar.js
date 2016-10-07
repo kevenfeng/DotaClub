@@ -31,11 +31,13 @@ class DetailToolbar extends Component {
   }
 
   componentDidMount() {
-    //if (this.isMounted) {
       this.fetchStroyExtra();
-    //}
   }
   fetchStroyExtra() {
+      this.state = {
+          isLoading: true,
+          extra: null,
+      };
     fetch(API_STROY_EXTRA + this.props.story.id)
       .then((response) => response.json())
       .then((responseData) => {

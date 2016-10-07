@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 import DetailToolbar from './DetailToolbar';
-//var MyWebView = (Platform.OS === 'ios') ? WebView : require('./WebView');
+var MyWebView = (Platform.OS === 'ios') ? WebView : require('./WebView');
 var MyWebView = WebView;
 
 
@@ -90,7 +90,7 @@ class StoryScreen extends Component {
           <View style={styles.container}>
             <MyWebView
               style={styles.content}
-              html={html}
+              source={{html:html}}
               onScrollChange={this.onWebViewScroll}/>
             <Animated.View style={[styles.header, {transform: [{translateY}]}]}>
               <Image

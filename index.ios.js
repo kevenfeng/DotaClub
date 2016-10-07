@@ -95,7 +95,7 @@ class DotaClub extends Component {
                 onPress={() => navigator.pop()}
                 style={styles.navBarLeftButton}>
                 <Icon
-                    name='ios-arrow-left'
+                    name='ios-arrow-dropleft'
                     size={30}
                     color='#666'
                     style={styles.icon}
